@@ -11,3 +11,7 @@ RUN apt-get update \
 
 COPY --chown=www-data:www-data . .
 COPY --chown=www-data:www-data config/config.inc.php.dist config/config.inc.php
+
+RUN useradd -U -u 1000 appuser && \
+    chown -R 1000:1000 /var/www/html
+USER 1000
