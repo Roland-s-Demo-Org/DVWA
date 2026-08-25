@@ -8,8 +8,11 @@ if( isset( $_COOKIE[ 'id' ] ) ) {
 	switch ($_DVWA['SQLI_DB']) {
 		case MYSQL:
 			// Check database
-			$query  = "SELECT first_name, last_name FROM users WHERE user_id = '$id' LIMIT 1;";
-			$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query ); // Removed 'or die' to suppress mysql errors
+			$query  = "SELECT first_name, last_name FROM users WHERE user_id = ? LIMIT 1;";
+			$stmt = mysqli_prepare($GLOBALS["___mysqli_ston"], $query);
+			mysqli_stmt_bind_param($stmt, "s", $id);
+			mysqli_stmt_execute($stmt);
+			$result = mysqli_stmt_get_result($stmt); // Removed 'or die' to suppress mysql errors
 
 			$exists = false;
 			if ($result !== false) {
