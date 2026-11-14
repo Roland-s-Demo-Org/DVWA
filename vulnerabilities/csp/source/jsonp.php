@@ -9,5 +9,5 @@ if (array_key_exists ("callback", $_GET)) {
 
 $outp = array ("answer" => "15");
 
-echo $callback . "(".json_encode($outp).")";
+echo htmlentities($callback, ENT_QUOTES) . "(".json_encode($outp).")";
 ?>
